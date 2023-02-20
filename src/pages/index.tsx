@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default function Home() {
   return (
@@ -15,6 +15,7 @@ export default function Home() {
         <p className="description">
           Get started by editing <code>pages/index.js</code>
         </p>
+        <h3>Hello Portfolio!</h3>
       </main>
 
       <Footer />
