@@ -8,9 +8,15 @@
     "export": "next export"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.9",
     "cypress": "^10.0.3",
+    "graphql": "^16.6.0",
     "next": "^12.1.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.0.28",
+    "typescript": "4.9.5"
   }
 }
