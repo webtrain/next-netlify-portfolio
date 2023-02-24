@@ -1,8 +1,13 @@
+import React from 'react'
 import Head from 'next/head'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import { gql } from '@apollo/client';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import { initializeApollo } from '../lib/qraphql/apollo';
 
-export default function Home() {
+const client = initializeApollo();
+
+export default function Home({ loading, posts }) {
   return (
     <div className="container">
       <Head>
@@ -20,5 +25,33 @@ export default function Home() {
 
       <Footer />
     </div>
-  )
+  );
+}
+
+export async function getStaticProps() {
+  const GET_ALL_POSTS = gql`
+    query GetPosts {
+      posts {
+        nodes {
+          author {
+            node {
+              id
+            }
+          }
+          date
+          title
+          uri
+          postId
+        }
+      }
+    }
+  `;
+  const { loading, data } = await client.query({ query: GET_ALL_POSTS });
+
+  return {
+    props: {
+      loading,
+      posts: data.posts.nodes || [],
+    },
+  };
 }
