@@ -1,13 +1,22 @@
 import React from 'react'
 import Head from 'next/head'
 import { gql } from '@apollo/client';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../view/layout/Header';
+import Footer from '../view/layout/Footer';
 import { initializeApollo } from '../lib/qraphql/apollo';
+import Posts from '../view/components/Posts/Posts';
+import { Post } from '../lib/types/types';
 
 const client = initializeApollo();
 
-export default function Home({ loading, posts }) {
+type HomePegeProps = {
+  loading: boolean,
+  posts: Post[]
+}
+
+export default function Home({ loading, posts }: HomePegeProps) {
+  if (loading) return <h2>Loading...</h2>
+
   return (
     <div className="container">
       <Head>
@@ -17,15 +26,12 @@ export default function Home({ loading, posts }) {
 
       <main>
         <Header title="Welcome to my app!" />
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-        <h3>Hello Portfolio!</h3>
+        <Posts posts={posts} />
       </main>
 
       <Footer />
     </div>
-  );
+  )
 }
 
 export async function getStaticProps() {
@@ -35,17 +41,25 @@ export async function getStaticProps() {
         nodes {
           author {
             node {
-              id
+              name
+              avatar {
+                url
+              }
             }
           }
           date
+          categories {
+            nodes {
+              slug
+            }
+          }
           title
           uri
           postId
         }
       }
     }
-  `;
+  `
   const { loading, data } = await client.query({ query: GET_ALL_POSTS });
 
   return {
