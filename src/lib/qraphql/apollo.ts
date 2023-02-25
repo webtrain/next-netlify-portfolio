@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   ApolloClient,
   ApolloLink,
@@ -19,37 +20,35 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | undefined
 
 const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
   // isomorphic fetch for passing the cookies along with each GraphQL request
-  const enhancedFetch = (url: RequestInfo, init: RequestInit) => {
-    return fetch(url, {
-      ...init,
-      headers: {
-        ...init.headers,
-        'Access-Control-Allow-Origin': '*',
-        // here we pass the cookie along for each request
-        Cookie: headers?.cookie ?? '',
-      },
-    }).then((response) => response)
-  }
+  const enhancedFetch = (url: string, init: any) => fetch(url, {
+    ...init,
+    headers: {
+      ...init.headers,
+      'Access-Control-Allow-Origin': '*',
+      // here we pass the cookie along for each request
+      Cookie: headers?.cookie ?? '',
+    },
+  }).then((response) => response)
 
   return new ApolloClient({
     // SSR only for Node.js
     ssrMode: typeof window === 'undefined',
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
-        if (graphQLErrors)
-          graphQLErrors.forEach(({ message, locations, path }) =>
-            console.log(
-              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-            )
-          )
-        if (networkError)
+        if (graphQLErrors) {
+          graphQLErrors.forEach(({ message, locations, path }) => console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+          ))
+        }
+        if (networkError) {
           console.log(
-            `[Network error]: ${networkError}. Backend is unreachable. Is it running?`
+            `[Network error]: ${networkError}. Backend is unreachable. Is it running?`,
           )
+        }
       }),
       // this uses apollo-link-http under the hood, so all the options here come from that package
       createUploadLink({
-        uri: process.env.NEXT_PUBLIC_BASE_API_URI + '/graphql',
+        uri: `${process.env.NEXT_PUBLIC_BASE_API_URI}/graphql`,
         // Make sure that CORS and cookies work
         fetchOptions: {
           mode: 'cors',
@@ -73,8 +72,9 @@ export const initializeApollo = (
   { headers, initialState }: IInitializeApollo = {
     headers: null,
     initialState: null,
-  }
+  },
 ) => {
+  // eslint-disable-next-line no-underscore-dangle
   const _apolloClient = apolloClient ?? createApolloClient(headers)
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
@@ -88,9 +88,7 @@ export const initializeApollo = (
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
-        ...destinationArray.filter((d) =>
-          sourceArray.every((s) => !isEqual(d, s))
-        ),
+        ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s))),
       ],
     })
 
@@ -108,9 +106,10 @@ export const initializeApollo = (
 
 export const addApolloState = (
   client: ApolloClient<NormalizedCacheObject>,
-  pageProps: any
+  pageProps: any,
 ) => {
   if (pageProps?.props) {
+    // eslint-disable-next-line no-param-reassign
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract()
   }
 
