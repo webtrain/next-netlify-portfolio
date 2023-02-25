@@ -7,7 +7,7 @@ function Posts({ posts }: PostsProps) {
     <>
       <h3>Posts</h3>
       <ul className={style.posts}>
-        {posts.map((post) => (
+        {posts.map(post => (
           <li className="post" key={post.postId}>
             <h4>{post.title}</h4>
             <p>{post.date}</p>
