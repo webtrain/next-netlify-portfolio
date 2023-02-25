@@ -28,7 +28,7 @@ const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
       // here we pass the cookie along for each request
       Cookie: headers?.cookie ?? '',
     },
-  }).then((response) => response)
+  }).then(response => response)
 
   return new ApolloClient({
     // SSR only for Node.js
@@ -88,7 +88,7 @@ export const initializeApollo = (
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
-        ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s))),
+        ...destinationArray.filter(d => sourceArray.every(s => !isEqual(d, s))),
       ],
     })
 

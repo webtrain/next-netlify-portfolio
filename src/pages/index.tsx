@@ -9,8 +9,6 @@ import { Post } from '../lib/types/types';
 
 const client = initializeApollo();
 
-
-
 type HomePegeProps = {
   loading: boolean,
   posts: Post[]
