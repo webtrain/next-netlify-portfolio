@@ -1,14 +1,14 @@
 import React from 'react'
-import { Posts as PostsProps } from '../../../lib/types/types'
+import { IPost } from '../../../lib/types/PostsType'
 import style from './Posts.module.css'
 
-function Posts({ posts }: PostsProps) {
+function Posts({ posts }: { posts: IPost[] }) {
   return (
     <>
       <h3>Posts</h3>
-      <ul className={style.posts}>
+      <ul className="grid grid-cols-4 gap-4">
         {posts.map(post => (
-          <li className="post" key={post.postId}>
+          <li className="post" key={post.id}>
             <h4>{post.title}</h4>
             <p>{post.date}</p>
           </li>
