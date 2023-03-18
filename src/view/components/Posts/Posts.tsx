@@ -1,6 +1,5 @@
 import React from 'react'
 import { IPost } from '../../../lib/types/PostsType'
-import style from './Posts.module.css'
 
 function Posts({ posts }: { posts: IPost[] }) {
   return (
