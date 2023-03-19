@@ -1,8 +1,12 @@
 import React from 'react'
+import { IPost } from '../../../lib/types/PostsType'
 
-function Post() {
+function Post({ id, title, date }: Partial<IPost>) {
   return (
-    <div>Post</div>
+    <li className="post" key={id}>
+      <h4>{title}</h4>
+      <small>{date}</small>
+    </li>
   )
 }
 
