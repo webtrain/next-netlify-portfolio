@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { IMenu } from '../../../lib/types/MenuType'
 import NavBar from './NavBar'
