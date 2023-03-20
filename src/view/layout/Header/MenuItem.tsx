@@ -8,10 +8,11 @@ import { IMenuItem } from '../../../lib/types/MenuType'
 function MenuItem({ label, uri }: Partial<IMenuItem>) {
   const activeSegment = useSelectedLayoutSegment()
   const active = `/${activeSegment}/` === uri
+  const path = uri.slice(0, uri.length - 1)
 
   return (
     <li className={active ? 'active' : ''}>
-      <Link href={uri}>{label}</Link>
+      <Link href={path}>{label}</Link>
     </li>
   )
 }
