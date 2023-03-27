@@ -6,10 +6,10 @@ import Posts from '../view/components/Posts/Posts'
 
 function HomePage({ posts }: { posts: IPost[] }) {
   return (
-    <main className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center w-full max-w-screen-wideScreen">
       <h1 className="text-3xl font-bold underline">Portfolio Page</h1>
       <Posts posts={posts} />
-    </main>
+    </div>
   )
 }
 
