@@ -1,9 +1,11 @@
-import { gql } from 'graphql-request'
 import React from 'react'
+import { gql } from 'graphql-request'
 import client from '../lib/grafbase'
 import { IMenus } from '../lib/types/MenuType'
 import '../styles/globals.css'
 import Header from '../view/layout/Header/Header'
+import Providers from './Providers'
+import Footer from '../view/layout/Footer/Footer'
 
 async function getLayoutData() {
   const layoutQuery = gql`
@@ -54,8 +56,13 @@ const RootLayout = async ({ children }: IRootLayout) => {
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
-        <Header menu={topMenu} />
-        {children}
+        <Providers>
+          <Header menu={topMenu} />
+          <main className="flex flex-col items-center">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )
