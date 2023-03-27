@@ -10,7 +10,7 @@ module.exports = {
       tablet: '768px',
       laptop: '1024px',
       desktop: '1280px',
-      wiseScreen: '1536px',
+      wideScreen: '1536px',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
